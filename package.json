@@ -1,0 +1,26 @@
+{
+  "name": "hackisu-signup",
+  "version": "0.1.5",
+  "description": "HackISU Signup for mailchimp",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "4.13.3",
+    "request": "^2.67.0"
+  },
+  "engines": {
+    "node": "0.12.7"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/HackISU/signup"
+  },
+  "keywords": [
+    "node",
+    "heroku",
+    "express"
+  ],
+  "license": "MIT"
+}
