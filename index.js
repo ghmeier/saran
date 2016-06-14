@@ -34,7 +34,7 @@ app.post('/signup', function(req, response) {
             json:true,
             body:{
                 email_address:user.email,
-                status: "subscribed",
+                status: "pending",
                 merge_fields:{
                     FNAME:user.first_name,
                     LNAME:user.last_name,
