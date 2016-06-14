@@ -50,7 +50,7 @@ app.post('/signup', function(req, response) {
 		return;
             }
 
-            response.json({data:bodyi, user:user});
+            response.json({data:body, user:user});
         });
     });
 });
