@@ -46,10 +46,11 @@ app.post('/signup', function(req, response) {
         },function(error,mail_response,body){
             if (error){
                 response.json({error:error});
-                return;
+
+		return;
             }
 
-            response.json({data:body});
+            response.json({data:bodyi, user:user});
         });
     });
 });
