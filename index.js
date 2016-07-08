@@ -20,6 +20,7 @@ app.get('/', function(request, response) {
 app.post('/signup', function(req, response) {
     var token = req.body.token;
     var resume = req.body.resume;
+    var github = req.body.github;
 
     request.get("https://my.mlh.io/api/v1/user?access_token="+token,function(err,res,body){
         var user = JSON.parse(body).data;
@@ -40,7 +41,8 @@ app.post('/signup', function(req, response) {
                     LNAME:user.last_name,
                     MLH_ID:user.id,
                     SCHOOL:user.school.name,
-                    RESUME:resume
+                    RESUME:resume,
+		    GITHUB:github
                 }
             }
         },function(error,mail_response,body){
