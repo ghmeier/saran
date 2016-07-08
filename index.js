@@ -31,8 +31,11 @@ app.post('/signup', function(req, response) {
 
     request.get("https://my.mlh.io/api/v1/user?access_token="+token,function(err,res,body){
         console.log(err, res, body);
+        if (err){
+            response.json({data:err});
+            return;
+        }
         var user = JSON.parse(body).data;
-
 
         request.post({
             url: "https://us10.api.mailchimp.com/3.0/lists/3e68b09893/members",
@@ -56,10 +59,8 @@ app.post('/signup', function(req, response) {
         },function(error,mail_response,body){
             if (error){
                 response.json({error:error});
-
-		return;
+                return;
             }
-
             response.json({data:body, user:user});
         });
     });
