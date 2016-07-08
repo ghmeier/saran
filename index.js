@@ -27,8 +27,10 @@ app.post('/signup', function(req, response) {
     var token = req.body.token;
     var resume = req.body.resume;
     var github = req.body.github;
+    console.log(req.body);
 
     request.get("https://my.mlh.io/api/v1/user?access_token="+token,function(err,res,body){
+        console.log(body);
         var user = JSON.parse(body).data;
 
 
