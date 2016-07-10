@@ -27,7 +27,6 @@ app.post('/signup', function(req, response) {
     var token = req.body.token;
     var resume = req.body.resume;
     var github = req.body.github;
-    console.log(req.body,token,resume,github);
 
     request.get("https://my.mlh.io/api/v1/user?access_token="+token,function(err,res,body){
         console.log(err, res, body);
@@ -57,6 +56,7 @@ app.post('/signup', function(req, response) {
                 }
             }
         },function(error,mail_response,body){
+            console.log(error, mail_response, body);
             if (error){
                 response.json({error:error});
                 return;
