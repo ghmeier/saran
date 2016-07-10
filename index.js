@@ -34,11 +34,12 @@ app.post('/signup', function(req, response) {
         rejectUnauthorized: false
     },function(err,res,body){
         if (err){
+	    console.log('ERROR getting user from mlh');
             response.json({data:err});
             return;
         }
         var user = JSON.parse(body).data;
-
+	console.log('SUCCESS getting user from mlh '+user.mlh_id);
         request.post({
             url: "https://us10.api.mailchimp.com/3.0/lists/3e68b09893/members",
             headers:{
@@ -59,11 +60,13 @@ app.post('/signup', function(req, response) {
                 }
             }
         },function(error,mail_response,body){
-            if (error){
+	    if (error){
+		console.log("ERROR subbing "+user.email);
                 response.json({error:error});
                 return;
             }
-            response.json({data:body, user:user});
+	    console.log('SUCCESS subbing '+user.email);
+            response.json({data:"success"});
         });
     });
 });
