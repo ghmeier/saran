@@ -33,7 +33,6 @@ app.post('/signup', function(req, response) {
         method: 'GET',
         rejectUnauthorized: false
     },function(err,res,body){
-        console.log(err, res, body);
         if (err){
             response.json({data:err});
             return;
@@ -60,7 +59,6 @@ app.post('/signup', function(req, response) {
                 }
             }
         },function(error,mail_response,body){
-            console.log(error, mail_response, body);
             if (error){
                 response.json({error:error});
                 return;
