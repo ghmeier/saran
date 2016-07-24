@@ -96,7 +96,7 @@ app.post('/signup', function(req, response) {
         var user = JSON.parse(body).data;
         user.checked_in = false;
         user.github = github;
-        use.resume = resume;
+        user.resume = resume;
         userService.putUser(user.id, user);
         request.post({
             url: "https://us10.api.mailchimp.com/3.0/lists/3e68b09893/members",
