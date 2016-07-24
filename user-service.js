@@ -45,6 +45,7 @@ function getAllUsers(token, cb) {
   checkToken(token, function(res) {
     if (!res) {
       cb(null);
+      return;
     }
     var permission = res.permission.split(",");
     var filter = {"_id":0};
