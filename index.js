@@ -1,5 +1,6 @@
 var express = require('express');
 var request = require("request");
+var userService = require('./user-service.js');
 var app = express();
 
 var bodyParser = require('body-parser');
@@ -23,6 +24,60 @@ app.get('/', function(request, response) {
   response.json({message:"success"})
 });
 
+app.get('/addViewer', function(req,response) {
+    var token = req.query.token;
+    var permission = req.query.permission;
+
+    userService.addViewer(token, permission);
+    response.json({data: "success"});
+});
+
+app.get('/getAllUsers', function(req, response) {
+    var token = req.query.token;
+
+    userService.getAllUsers(token, function(users) {
+        response.json({body: users});
+    });
+});
+
+app.get('/merge', function(req, response) {
+    request.get("https://my.mlh.io/api/v1/users?client_id=79020d89d525fb39d0d5c704e013f45a4ea3d85a732a5b3eba18617b95250cfe&secret=d500f122f2111b0c2797834b75e006885f8cd73d7f6e41fa2438e068a815df80",function(err,body,res){
+        var parsed = JSON.parse(body.body).data;
+        var members = {};
+        for (var i=0; i<parsed.length; i++) {
+            var cur = parsed[i];
+            cur.checked_in = false;
+            cur.github = "";
+            cur.resume = "";
+            members[cur.id.toString()] = cur;
+        }
+        request.get({
+            url: "https://us10.api.mailchimp.com/3.0/lists/3e68b09893/members?count=1000&fields=members.email_address,members.merge_fields",
+            headers:{
+                "Authorization":"apikey 53e48c48bc0cc6a35ab62c0c95eee883-us10",
+                "content-type": "application/json",
+            },
+            json:true
+        }, function(err, res, body) {
+            var rawMembers = body.members;
+            for (var i=0; i<rawMembers.length; i++) {
+                var cur = rawMembers[i];
+                var id = cur.merge_fields.MLH_ID;
+                members[id]["github"] = cur.merge_fields.GITHUB;
+                members[id]["resume"] = cur.merge_fields.RESUME;
+            }
+            var keys = Object.keys(members);
+            for (var i=0; i<keys.length; i++) {
+                var id = keys[i];
+                userService.putUser(id, members[id]);
+                console.log(i);
+            }
+
+            response.json({data:members});
+        });
+    });
+});
+
 app.post('/signup', function(req, response) {
     var token = req.body.token;
     var resume = req.body.resume;
@@ -39,7 +94,10 @@ app.post('/signup', function(req, response) {
             return;
         }
         var user = JSON.parse(body).data;
-	console.log('SUCCESS getting user from mlh '+user.mlh_id);
+        user.checked_in = false;
+        user.github = github;
+        use.resume = resume;
+        userService.putUser(user.id, user);
         request.post({
             url: "https://us10.api.mailchimp.com/3.0/lists/3e68b09893/members",
             headers:{
@@ -60,12 +118,12 @@ app.post('/signup', function(req, response) {
                 }
             }
         },function(error,mail_response,body){
-	    if (error){
-		console.log("ERROR subbing "+user.email);
+	        if (error){
+		        console.log("ERROR subbing "+user.email);
                 response.json({error:error});
                 return;
             }
-	    console.log('SUCCESS subbing '+user.email);
+	        console.log('SUCCESS subbing '+user.email);
             response.json({data:"success"});
         });
     });
