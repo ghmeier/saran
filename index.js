@@ -36,7 +36,7 @@ app.get('/getAllUsers', function(req, response) {
     var token = req.query.token;
 
     userService.getAllUsers(token, function(users) {
-        response.json({body: users});
+        response.json({data: users});
     });
 });
 

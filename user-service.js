@@ -47,6 +47,7 @@ function getAllUsers(token, cb) {
       cb(null);
       return;
     }
+
     var permission = res.permission.split(",");
     var filter = {"_id":0};
     for (var i=0; i<permission.length; i++) {
