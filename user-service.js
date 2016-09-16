@@ -22,6 +22,10 @@ function mongoConnect(cb) {
       return ;
     }
     gDb = db;
+
+    db.on('close', function(){
+      gDb = null;
+    });
     cb(gDb);
 
   });
@@ -85,7 +89,8 @@ function getAllUsers(token, cb) {
     }
 
     var permission = res.permission.split(",");
-    var filter = {"_id":1};
+    console.log(permission);
+    var filter = {"_id":0};
     for (var i=0; i<permission.length; i++) {
       filter[permission[i]] = 1;
     }
@@ -96,7 +101,6 @@ function getAllUsers(token, cb) {
         res.toArray(function(err, val) {
           cb(val);
         });
-        db.close();
       });
     });
   });
