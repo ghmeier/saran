@@ -36,7 +36,21 @@ app.get('/getAllUsers', function(req, response) {
     var token = req.query.token;
 
     userService.getAllUsers(token, function(users) {
+        for (var i=0; i<users.length;i++) {
+
+            // if (typeof users[i].mlh_id === 'number'){
+            //     var num = users[i].mlh_id.toString();
+            //     //console.log(users[i].mlh_id,typeof users[i].mlh_id, typeof num);
+            //     userService.putUserByID(users[i]._id, {mlh_id: num}, function(err){
+            //         if (err) {
+            //             console.log(err);
+            //         }
+            //     })
+            // }
+            //break;
+        }
         response.json({data: users});
+        return;
     });
 });
 
@@ -49,7 +63,9 @@ app.get('/merge', function(req, response) {
             cur.checked_in = false;
             cur.github = "";
             cur.resume = "";
-            members[cur.id.toString()] = cur;
+            cur.mlh_id = cur.id.toString();
+            members[cur.mlh_id] = cur;
+            delete cur.id;
         }
         request.get({
             url: "https://us10.api.mailchimp.com/3.0/lists/3e68b09893/members?count=1000&fields=members.email_address,members.merge_fields",
@@ -63,17 +79,41 @@ app.get('/merge', function(req, response) {
             for (var i=0; i<rawMembers.length; i++) {
                 var cur = rawMembers[i];
                 var id = cur.merge_fields.MLH_ID;
-                members[id]["github"] = cur.merge_fields.GITHUB;
-                members[id]["resume"] = cur.merge_fields.RESUME;
+
+                if (typeof id === 'number'){
+                    id = id.toString();
+                }
+                if (members[id]) {
+                    members[id]["github"] = cur.merge_fields.GITHUB;
+                    members[id]["resume"] = cur.merge_fields.RESUME;
+                }
             }
-            var keys = Object.keys(members);
-            for (var i=0; i<keys.length; i++) {
-                var id = keys[i];
-                userService.putUser(id, members[id]);
-                console.log(i);
-            }
+            userService.putUsers(members, function(r) {
+                console.log(r);
+            });
 
             response.json({data:members});
+            return;
+        });
+    });
+});
+
+app.post('/check_in', function(req, response) {
+    var id = req.body.id;
+    var checked_in = req.body.checked_in;
+
+    userService.getUser(id, function(res) {
+        res.checked_in = checked_in;
+        res.mlh_id = id;
+        console.log(res);
+        userService.putUser(id, res, function(err) {
+            if (err){
+                console.log("PRINT");
+                response.json(err);
+                return;
+            }
+            console.log("SDAS");
+            response.json(res);
         });
     });
 });
@@ -89,7 +129,7 @@ app.post('/signup', function(req, response) {
         rejectUnauthorized: false
     },function(err,res,body){
         if (err){
-	    console.log('ERROR getting user from mlh');
+            console.log('ERROR getting user from mlh');
             response.json({data:err});
             return;
         }
@@ -97,7 +137,9 @@ app.post('/signup', function(req, response) {
         user.checked_in = false;
         user.github = github;
         user.resume = resume;
-        userService.putUser(user.id, user);
+        user.mlh_id = id.toString();
+        delete user.id;
+        userService.putUser(user.mlh_id, user);
         request.post({
             url: "https://us10.api.mailchimp.com/3.0/lists/3e68b09893/members",
             headers:{
@@ -111,7 +153,7 @@ app.post('/signup', function(req, response) {
                 merge_fields:{
                     FNAME:user.first_name,
                     LNAME:user.last_name,
-                    MLH_ID:user.id,
+                    MLH_ID:user.mlh_id,
                     SCHOOL:user.school.name,
                     RESUME:resume,
 		    GITHUB:github
