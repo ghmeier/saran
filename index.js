@@ -137,7 +137,7 @@ app.post('/signup', function(req, response) {
         user.checked_in = false;
         user.github = github;
         user.resume = resume;
-        user.mlh_id = id.toString();
+        user.mlh_id = user.id.toString();
         delete user.id;
         userService.putUser(user.mlh_id, user);
         request.post({
