@@ -90,16 +90,17 @@ app.post('/check_in', function(req, response) {
     var checked_in = req.body.checked_in;
 
     userService.getUser(id, function(res) {
+        if (!res) {
+            response.json("NOT AVAILABLE");
+            return;
+        }
         res.checked_in = checked_in;
         res.mlh_id = id;
-        console.log(res);
         userService.putUser(id, res, function(err) {
             if (err){
-                console.log("PRINT");
                 response.json(err);
                 return;
             }
-            console.log("SDAS");
             response.json(res);
         });
     });

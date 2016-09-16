@@ -43,7 +43,6 @@ function putUsers(data, cb) {
     })
   }
   mongoConnect(function(db) {
-    console.log(docs[0]);
     db.collection("users").bulkWrite(docs,null,function(err, r) {
       if (err) {
         console.log(err);
@@ -89,7 +88,6 @@ function getAllUsers(token, cb) {
     }
 
     var permission = res.permission.split(",");
-    console.log(permission);
     var filter = {"_id":0};
     for (var i=0; i<permission.length; i++) {
       filter[permission[i]] = 1;
