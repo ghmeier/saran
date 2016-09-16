@@ -36,19 +36,6 @@ app.get('/getAllUsers', function(req, response) {
     var token = req.query.token;
 
     userService.getAllUsers(token, function(users) {
-        for (var i=0; i<users.length;i++) {
-
-            // if (typeof users[i].mlh_id === 'number'){
-            //     var num = users[i].mlh_id.toString();
-            //     //console.log(users[i].mlh_id,typeof users[i].mlh_id, typeof num);
-            //     userService.putUserByID(users[i]._id, {mlh_id: num}, function(err){
-            //         if (err) {
-            //             console.log(err);
-            //         }
-            //     })
-            // }
-            //break;
-        }
         response.json({data: users});
         return;
     });
