@@ -80,7 +80,7 @@ function getUser(id, cb) {
   });
 }
 
-function getAllUsers(token, cb) {
+function getAllUsers(token, checked_in, cb) {
   checkToken(token, function(res) {
     if (!res) {
       cb(null);
@@ -93,9 +93,14 @@ function getAllUsers(token, cb) {
       filter[permission[i]] = 1;
     }
 
+    var query = {};
+    if (checked_in) {
+      query.checked_in = true;
+    }
+
     mongoConnect(function(db) {
 
-      db.collection("users").find({}, filter, function (err, res) {
+      db.collection("users").find(query, filter, function (err, res) {
         res.toArray(function(err, val) {
           cb(val);
         });

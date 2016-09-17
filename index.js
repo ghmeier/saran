@@ -34,8 +34,9 @@ app.get('/addViewer', function(req,response) {
 
 app.get('/getAllUsers', function(req, response) {
     var token = req.query.token;
+    var checked_in = req.query.checked_in || false;
 
-    userService.getAllUsers(token, function(users) {
+    userService.getAllUsers(token, checked_in, function(users) {
         response.json({data: users});
         return;
     });
