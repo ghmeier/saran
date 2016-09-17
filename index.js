@@ -85,7 +85,7 @@ app.get('/merge', function(req, response) {
     });
 });
 
-app.post('/check_in', function(req, response) {
+app.post('/checkIn', function(req, response) {
     var id = req.body.id;
     var checked_in = req.body.checked_in;
 
@@ -117,12 +117,11 @@ app.post('/signup', function(req, response) {
         rejectUnauthorized: false
     },function(err,res,body){
         if (err){
-            console.log('ERROR getting user from mlh');
+            console.log('ERROR getting tacocatuser from mlh');
             response.json({data:err});
             return;
         }
         var user = JSON.parse(body).data;
-        user.checked_in = false;
         user.github = github;
         user.resume = resume;
         user.mlh_id = user.id.toString();
