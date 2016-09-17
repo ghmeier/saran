@@ -124,13 +124,12 @@ app.post('/signup', function(req, response) {
         var user = JSON.parse(body).data;
         user.github = github;
         user.resume = resume;
+        user.checked_in = false;
         user.mlh_id = user.id.toString();
         delete user.id;
         userService.getUser(user.mlh_id,function(res) {
             if (res) {
                 user.checked_in = res.checked_in;
-            } else {
-                user.checked_in = false;
             }
             userService.putUser(user.mlh_id, user);
         });
