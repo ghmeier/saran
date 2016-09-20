@@ -2,29 +2,25 @@ var MongoClient = require("mongodb").MongoClient;
 var ObjectId = require("mongodb").ObjectID;
 var request = require("request");
 
-var mongoUrl = process.env["MONGODB_URI"] || "";
+var mongoUrl = process.env["MONGODB_URI"];
 
-module.exports.putUser = putUser;
-module.exports.putUsers = putUsers;
-module.exports.getUser = getUser;
-module.exports.addViewer = addViewer;
-module.exports.getViewer = getViewer;
-module.exports.getAllUsers = getAllUsers;
-
+/* Keeps a global db connection around so we
+   don't have to go searching for a new one every
+   time. All mongo calls should be wrapped with
+   mongoConnect((db) => {}) */
 var gDb = null;
-
 function mongoConnect(cb) {
   if (gDb) {
     cb(gDb);
     return;
   }
-  MongoClient.connect(mongoUrl,function(err,db){
+  MongoClient.connect(mongoUrl, (err, db) => {
     if (err){
       return ;
     }
     gDb = db;
 
-    db.on('close', function(){
+    db.on('close', () => {
       gDb = null;
     });
     cb(gDb);
@@ -32,7 +28,7 @@ function mongoConnect(cb) {
   });
 }
 
-function putUsers(data, cb) {
+module.exports.putUsers = (data, cb) => {
   var docs = []
   for (mlh_id in data) {
     docs.push({
@@ -43,8 +39,8 @@ function putUsers(data, cb) {
       }
     })
   }
-  mongoConnect(function(db) {
-    db.collection("users").bulkWrite(docs,null,function(err, r) {
+  mongoConnect((db) => {
+    db.collection("users").bulkWrite(docs,null,(err, r) => {
       if (err) {
         console.log(err);
         cb(null);
@@ -56,10 +52,10 @@ function putUsers(data, cb) {
   });
 }
 
-function putUser(id, data, cb) {
+module.exports.putUser = (id, data, cb) => {
   data.mlh_id = id;
-  mongoConnect(function (db) {
-    db.collection("users").update({mlh_id: id}, data, {upsert:true}, function(err, res) {
+  mongoConnect((db) => {
+    db.collection("users").update({mlh_id: id}, data, {upsert:true}, (err, res) => {
       console.log("Finished "+id)
       if (cb) {
         cb(err);
@@ -68,9 +64,9 @@ function putUser(id, data, cb) {
   });
 }
 
-function getUser(id, cb) {
-  mongoConnect(function (db) {
-    db.collection("users").findOne({mlh_id: id}, function(err, res) {
+module.exports.getUser = (id, cb) => {
+  mongoConnect((db) => {
+    db.collection("users").findOne({mlh_id: id}, (err, res) => {
       if (err) {
         console.log(err)
         cb(null);
@@ -81,8 +77,8 @@ function getUser(id, cb) {
   });
 }
 
-function getAllUsers(token, checked_in, cb) {
-  checkToken(token, function(res) {
+module.exports.getAllUsers = (token, checked_in, cb) => {
+  checkToken(token, (res) => {
     if (!res) {
       cb(null);
       return;
@@ -99,10 +95,9 @@ function getAllUsers(token, checked_in, cb) {
       query.checked_in = true;
     }
 
-    mongoConnect(function(db) {
-
-      db.collection("users").find(query, filter, function (err, res) {
-        res.toArray(function(err, val) {
+    mongoConnect((db) => {
+      db.collection("users").find(query, filter, (err, res) => {
+        res.toArray((err, val) => {
           cb(val);
         });
       });
@@ -110,27 +105,27 @@ function getAllUsers(token, checked_in, cb) {
   });
 }
 
-function getViewer(cb) {
-  mongoConnect(function(db) {
-    db.collection("viewers").find({}, {}, function(err, res) {
+module.exports.getViewer = (cb) => {
+  mongoConnect((db) => {
+    db.collection("viewers").find({}, {}, (err, res) => {
       if (err) {
         console.log(err);
         cb(err,null);
         return;
       }
-      res.toArray(function(err, val) {
+      res.toArray((err, val) => {
         cb(null, val)
       });
     });
   });
 }
 
-function addViewer(token, permission) {
-  mongoConnect(function(db) {
+module.exports.addViewer = (token, permission) => {
+  mongoConnect((db) => {
     db.collection("viewers").update({token: token}, {
       token: token,
       permission: permission
-    }, {upsert: true}, function(err, res) {
+    }, {upsert: true}, (err, res) => {
       if (err) {
         console.log(err);
       }
@@ -139,9 +134,9 @@ function addViewer(token, permission) {
 }
 
 
-function checkToken(token, cb) {
-  mongoConnect(function(db) {
-    db.collection("viewers").findOne({token:token}, function(err, res) {
+module.exports.checkToken = (token, cb) => {
+  mongoConnect((db) => {
+    db.collection("viewers").findOne({token:token}, (err, res) => {
       if (err) {
         console.log(err);
         cb(null);

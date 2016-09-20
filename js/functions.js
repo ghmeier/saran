@@ -45,7 +45,7 @@ MyMlhDash.prototype.getCountTags = function(data){
 
 MyMlhDash.prototype.getTags = function(data){
     var md = [];
-    console.log(data[0]);
+
     var keys = Object.keys(data[0]);
     for (var i=0;i<keys.length;i++) {
         if (keys[i]) {
@@ -54,12 +54,9 @@ MyMlhDash.prototype.getTags = function(data){
     }
     for (var i=0;i<data.length;i++){
         var cur = data[i];
-        if (!cur.school){
-            console.log(cur, i);
-        }
         cur.school_name = cur.school.name;
-        var el = "";
 
+        var el = "";
         if (typeof cur.checked_in === "boolean"){
             var checked_in = "<td><input onclick='checkIn(\""+cur.mlh_id+"\")' type='checkbox'  id='"+cur.mlh_id+"'";
             if (cur.checked_in){
@@ -141,17 +138,14 @@ MyMlhDash.prototype.getTags = function(data){
 
 MyMlhDash.prototype.getMyMLHData = function(token){
     var self = this;
-    var url = "/users?token="+token;
-    if (token === "sponsor") {
-        url += "&checked_in=true";
-    }
+    var url = "/user?token="+token;
+
     $(".progress").show();
     $(".input-field").hide();
-    //$.get("https://my.mlh.io/api/v1/users?client_id="+this.APP_ID+"&secret="+this.SECRET,function(body){
     $.get(url, function(body) {
         self.data = body.data;
         if (!self.data){
-            Materialize.toast('No data Available, try reloading!', 2000)
+            Materialize.toast('No data Available, try reloading!', 5000)
             return;
         }
         self.data = self.sortBy(self.data,'checked_in').reverse();
@@ -324,16 +318,15 @@ var download = function(name, text) {
 };
 
 var checkIn = function(id){
-    console.log(id);
     var checked_in = $("#"+id).is(':checked');
     $.ajax({
-        url: "http://localhost:5000/checkIn",
+        url: "/user/"+id+"/in",
         type: "POST",
         dataType: "json",
         contentType: "application/json",
-        data: JSON.stringify({id:id,checked_in:checked_in}),
+        data: JSON.stringify({checked_in:checked_in}),
         success: function(data) {
-            console.log(data);
+
         }
     });
 }
