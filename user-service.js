@@ -2,12 +2,13 @@ var MongoClient = require("mongodb").MongoClient;
 var ObjectId = require("mongodb").ObjectID;
 var request = require("request");
 
-var mongoUrl = process.env["MONGODB_URI"];
+var mongoUrl = process.env["MONGODB_URI"] || "";
 
 module.exports.putUser = putUser;
 module.exports.putUsers = putUsers;
 module.exports.getUser = getUser;
 module.exports.addViewer = addViewer;
+module.exports.getViewer = getViewer;
 module.exports.getAllUsers = getAllUsers;
 
 var gDb = null;
@@ -97,7 +98,6 @@ function getAllUsers(token, checked_in, cb) {
     if (checked_in) {
       query.checked_in = true;
     }
-    console.log(query,checked_in);
 
     mongoConnect(function(db) {
 
@@ -105,6 +105,21 @@ function getAllUsers(token, checked_in, cb) {
         res.toArray(function(err, val) {
           cb(val);
         });
+      });
+    });
+  });
+}
+
+function getViewer(cb) {
+  mongoConnect(function(db) {
+    db.collection("viewers").find({}, {}, function(err, res) {
+      if (err) {
+        console.log(err);
+        cb(err,null);
+        return;
+      }
+      res.toArray(function(err, val) {
+        cb(null, val)
       });
     });
   });

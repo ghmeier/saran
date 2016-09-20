@@ -141,7 +141,7 @@ MyMlhDash.prototype.getTags = function(data){
 
 MyMlhDash.prototype.getMyMLHData = function(token){
     var self = this;
-    var url = "http://hackisu-signup.herokuapp.com/getAllUsers?token="+token;
+    var url = "/users?token="+token;
     if (token === "sponsor") {
         url += "&checked_in=true";
     }

@@ -1,7 +1,7 @@
 {
-  "name": "hackisu-signup",
+  "name": "saran",
   "version": "0.1.5",
-  "description": "HackISU Signup for mailchimp",
+  "description": "A thin, stretchy, protective layer around MyMLH",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
@@ -15,11 +15,11 @@
     "ejs": "^2.5.2"
   },
   "engines": {
-    "node": "0.12.7"
+    "node": "6.6.0"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/HackISU/signup"
+    "url": "https://github.com/ghmeier/saran"
   },
   "keywords": [
     "node",

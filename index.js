@@ -33,7 +33,13 @@ app.get('/js/functions.js', function(request, response) {
     response.sendFile(path.join(__dirname+"/js/functions.js"));
 });
 
-app.get('/addViewer', function(req,response) {
+app.get('/token', function(req,response) {
+    userService.getViewer(function(err, val) {
+        response.json({data:val, error: err});
+    });
+});
+
+app.post('/token', function(req,response) {
     var token = req.query.token;
     var permission = req.query.permission;
 
@@ -41,7 +47,7 @@ app.get('/addViewer', function(req,response) {
     response.json({data: "success"});
 });
 
-app.get('/getAllUsers', function(req, response) {
+app.get('/user', function(req, response) {
     var token = req.query.token;
     var checked_in = req.query.checked_in || false;
 
@@ -95,8 +101,8 @@ app.get('/merge', function(req, response) {
     });
 });
 
-app.post('/checkIn', function(req, response) {
-    var id = req.body.id;
+app.post('/user/:id/in', function(req, response) {
+    var id = req.query.id;
     var checked_in = req.body.checked_in;
 
     userService.getUser(id, function(res) {
