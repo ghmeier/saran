@@ -1,0 +1,30 @@
+{
+  "name": "Saran",
+  "description": "A thin, stretchy, protective layer around MyMLH for hackathon signups.",
+  "keywords": [
+    "mymlh",
+    "hackathon",
+    "registration"
+  ],
+  "website": "https://github.com/ghmeier/saran",
+  "repository": "https://github.com/ghmeier/saran",
+  "success_url": "/",
+  "scripts": {
+  },
+  "env": {
+  },
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "free"
+    }
+  },
+  "image": "heroku/nodejs",
+  "addons": [
+    "openredis",
+    {
+      "plan": "mongolab:sandbox",
+      "as": "MONGO"
+    },
+  ]
+}
