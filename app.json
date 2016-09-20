@@ -21,10 +21,9 @@
   },
   "image": "heroku/nodejs",
   "addons": [
-    "openredis",
     {
       "plan": "mongolab:sandbox",
       "as": "MONGO"
-    },
+    }
   ]
 }
