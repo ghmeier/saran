@@ -21,7 +21,7 @@
     "type": "git",
     "url": "https://github.com/ghmeier/saran"
   },
-  "keywords": [
+"keywords": [
     "node",
     "heroku",
     "express"

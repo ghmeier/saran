@@ -1,8 +1,8 @@
 var express = require('express');
 var request = require("request");
 var path = require("path");
-var tokenHelper = require('./token-helper.js');
-var userHelper = require('./user-helper.js');
+var tokenHelper = require('./lib/token-helper.js');
+var userHelper = require('./lib/user-helper.js');
 var app = express();
 
 var bodyParser = require('body-parser');
