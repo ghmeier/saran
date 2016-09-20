@@ -19,10 +19,18 @@ app.use(function(req, res, next) {
   next();
 });
 
+app.set('view engine', 'ejs');
 app.set('port', (process.env.PORT || 5000));
 
 app.get('/', function(request, response) {
-  response.sendFile(path.join(__dirname+"/views/index.html"));
+  response.render("index",{
+        APP_ID: process.env['APP_ID'],
+        SECRET: process.env['SECRET']
+    });
+});
+
+app.get('/js/functions.js', function(request, response) {
+    response.sendFile(path.join(__dirname+"/js/functions.js"));
 });
 
 app.get('/addViewer', function(req,response) {

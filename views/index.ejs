@@ -209,11 +209,11 @@
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
     <script src="http://code.highcharts.com/highcharts.js"></script>
-    <script src="./functions.js"></script>
+    <script src="js/functions.js"></script>
 
     <script>
-        var APP_ID = "";
-        var SECRET = "";
+        var APP_ID = "<%= APP_ID %>";
+        var SECRET = "<%= SECRET %>";
         var mlhDash = new MyMlhDash(APP_ID,SECRET);
         var token = null;
 
