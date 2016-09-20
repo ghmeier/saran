@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
+    <link href="http://oss.maxcdn.com/clusterize.js/0.15.0/clusterize.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style >
+    .sorting{
+        cursor:pointer;
+    }
+
+    .input-field{
+        display: none;
+    }
+    </style>
+</head>
+<body>
+    <div class="navbar-fixed">
+        <nav>
+          <div class="nav-wrapper">
+            <a href="#!" class="brand-logo center">My MLH Dashboard</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-dowm" style="height:inherit">
+                <li style="height:inherit">
+                    <a href="https://mlh.io" style="height:inherit">
+                        <img class="right" style="height:90%;padding-top:5%" src="http://static.mlh.io/brand-assets/logo/mlh-logo.png"></img>API By&nbsp;
+                    </a>
+                </li>
+            </ul>
+          </div>
+        </nav>
+    </div>
+    <div class="container" style="width:90%">
+        <div class="section">
+            <div class="row">
+                <div class="col s3">
+                    <h5>Registrants:<span id="stats"></span></h5>
+                </div>
+                <div class="input-field col s3">
+                    <select id="search_column" class="validate">
+                      <option value="" disabled selected>Column Name</option>
+                      <option value="email">Email</option>
+                      <option value="first_name">First</option>
+                      <option value="last_name">Last</option>
+                      <option value="major">Major</option>
+                      <option value="shirt_size">Shirt Size</option>
+                      <option value="dietary_restrictions">Dietary Restrictions</option>
+                      <option value="school_name">School</option>
+                    </select>
+                    <label>Filter By</label>
+                </div>
+                <div class="input-field col s3">
+                    <input placeholder="<regex_search_term>" id="search" type="text">
+                    <label for="search">Search</label>
+                </div>
+                <div class="col s3">
+                <a id="download" class="waves-effect waves-light btn-large"><i class="material-icons left">replay</i>Download Checked</a>
+                </div>
+            </div>
+            <div class="row clusterize">
+                <div id="scrollArea" class="col s12 clusterize-scroll" style="max-height:700px">
+                    <table class="highlight">
+                        <thead>
+                            <tr>
+                                <th class="sorting" id="checked_in" style="display:none">
+                                    In
+                                    <input type="checkbox"  id="checked_in-dn" />
+                                    <label style="height:15px;margin-left:0px;padding-left:0px" for="checked_in-dn"></label>
+                                </th>
+                                <th class="sorting" id="email" style="display:none">
+                                    Email
+                                    <input type="checkbox"  id="email-dn" />
+                                    <label style="height:15px;margin-left:0px;padding-left:0px" for="email-dn"></label>
+                                </th>
+                                <th class="sorting" id="first_name" style="display:none">
+                                    First
+                                    <input type="checkbox"  id="first_name-dn" />
+                                    <label style="height:15px;margin-left:0px;padding-left:0px" for="first_name-dn"></label>
+                                </th>
+                                <th class="sorting" id="last_name" style="display:none">
+                                    Last
+                                    <input type="checkbox"  id="last_name-dn" />
+                                    <label style="height:15px;margin-left:0px;padding-left:0px" for="last_name-dn"></label>
+                                </th>
+                                <th class="sorting" id="major" style="display:none">
+                                    Major
+                                    <input type="checkbox"  id="major-dn" />
+                                    <label style="height:15px;margin-left:0px;padding-left:0px" for="major-dn"></label>
+                                </th>
+                                <th class="sorting" id="shirt_size" style="display:none">
+                                    Shirt
+                                    <input type="checkbox"  id="shirt_size-dn" />
+                                    <label style="height:15px;margin-left:0px;padding-left:0px" for="shirt_size-dn"></label>
+                                </th>
+                                <th class="sorting" id="dietary_restrictions" style="display:none">
+                                    Diet
+                                    <input type="checkbox"  id="dietary_restrictions-dn" />
+                                    <label style="height:15px;margin-left:0px;padding-left:0px" for="dietary_restrictions-dn"></label>
+                                </th>
+                                <th class="sorting" id="school" style="display:none">
+                                    School
+                                    <input type="checkbox"  id="school_name-dn" />
+                                    <label style="height:15px;margin-left:0px;padding-left:0px" for="school_name-dn"></label>
+                                </th>
+                                <th class="sorting" id="phone_number" style="display:none">
+                                    Phone
+                                    <input type="checkbox"  id="phone_number-dn" />
+                                    <label style="height:15px;margin-left:0px;padding-left:0px" for="phone_number-dn"></label>
+                                </th>
+                                <th class="sorting" id="github" style="display:none">
+                                    Github
+                                    <input type="checkbox"  id="github-dn" />
+                                    <label style="height:15px;margin-left:0px;padding-left:0px" for="github-dn"></label>
+                                </th>
+                                <th class="sorting" id="resume" style="display:none">
+                                    Resume
+                                    <input type="checkbox"  id="resume-dn" />
+                                    <label style="height:15px;margin-left:0px;padding-left:0px" for="resume-dn"></label>
+                                </th>
+                            </tr>
+                        </thead>
+                      <tbody id="contentArea" class="clusterize-content">
+                        <tr class="clusterize-no-data">
+                            <td>
+                            </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <div class="progress">
+                        <div class="indeterminate"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section" style="">
+            <div class="row">
+                <div class="clusterize">
+                    <div id="majorScroll" class="col s12 clusterize-scroll" style="max-height:400px">
+                        <h5>Total Majors: <span id="totalmajors"></span></h5>
+                        <table class="highlight">
+                            <thead>
+                                <tr>
+                                    <th class="major_count" onclick="sortRefresh('major_count')">Major</th>
+                                    <th class="major_number" onclick="sortRefresh('major_number')">#</th>
+                                </tr>
+                            </thead>
+                            <tbody id="majorContent" class="clusterize-content">
+                                <tr class="clusterize-no-data">
+                                    <td>Loading data...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="clusterize">
+                    <div id="schoolScroll" class="col s12 clusterize-scroll" style="max-height:400px">
+                        <h5>Total Schools: <span id="totalschools"></span></h5>
+                        <table class="highlight">
+                            <thead>
+                                <tr>
+                                    <th class="school_count" onclick="sortRefresh('school_count')">School</th>
+                                    <th class="school_number" onclick="sortRefresh('school_number')">#</th>
+                                </tr>
+                            </thead>
+                            <tbody id="schoolContent" class="clusterize-content">
+                                <tr class="clusterize-no-data">
+                                    <td>Loading data...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="clusterize">
+                    <div id="shirtsScroll" class="col s12 clusterize-scroll" style="max-height:400px">
+                        <h5>Shirt Sizes:</h5>
+                        <table class="highlight">
+                                                <thead>
+                            <tr>
+                                <th class="shirt_count" onclick="sortRefresh('shirt_count')">Shirts</th>
+                                <th class="shirt_number" onclick="sortRefresh('shirt_number')">#</th>
+                            </tr>
+                        </thead>
+                          <tbody id="shirtsContent" class="clusterize-content">
+                            <tr class="clusterize-no-data">
+                              <td>Loading data...</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div id="chart-container" class="col s12" style="height:400px">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <a id="refresh" class="waves-effect waves-light btn-large" style="position:fixed;bottom:45px;right:24px;"><i class="material-icons left">replay</i>Refresh</a>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="http://oss.maxcdn.com/clusterize.js/0.15.0/clusterize.min.js"></script>
+    <script src="http://underscorejs.org/underscore-min.js"></script>
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <script src="./functions.js"></script>
+
+    <script>
+        var APP_ID = "";
+        var SECRET = "";
+        var mlhDash = new MyMlhDash(APP_ID,SECRET);
+        var token = null;
+
+        $(document).ready(function() {
+            $('select').material_select();
+            var token = getUrlParameter("token");
+
+            mlhDash.getMyMLHData(token);
+        });
+
+        $("#refresh").click(function() {
+            mlhDash.destroyData();
+            mlhDash.getMyMLHData(token);
+        });
+
+        $("#download").click(function() {
+            var columns = [];
+            if (document.getElementById("email-dn").checked){
+                columns.push("email");
+            }
+            if (document.getElementById("first_name-dn").checked){
+                columns.push("first_name");
+            }
+            if (document.getElementById("last_name-dn").checked){
+                columns.push("last_name");
+            }
+            if (document.getElementById("major-dn").checked){
+                columns.push("major");
+            }
+            if (document.getElementById("shirt_size-dn").checked){
+                columns.push("shirt_size");
+            }
+            if (document.getElementById("dietary_restrictions-dn").checked){
+                columns.push("dietary_restrictions");
+            }
+            if (document.getElementById("school_name-dn").checked){
+                columns.push("school_name");
+            }
+            if (document.getElementById("phone_number-dn").checked){
+                columns.push("phone_number");
+            }
+            if (document.getElementById("github-dn").checked){
+                columns.push("github");
+            }
+            if (document.getElementById("resume-dn").checked){
+                columns.push("resume");
+            }
+            if (document.getElementById("checked_in-dn").checked){
+                columns.push("checked_in");
+            }
+
+            mlhDash.downloadData(columns);
+        });
+
+        $("#search").keyup(function(){
+            if (!$("#search_column").val() || $("#search_column").val() == ""){
+                return;
+            }
+
+            delay(function(){
+                var search_term = $("#search").val();
+                var col = $("#search_column").val();
+
+                mlhDash.searchData(col,search_term);
+
+            },300);
+        });
+
+        $(".checked_in_box").click(function(e) {
+            console.log(e.target);
+        });
+
+        $("#search_column").change(function(){
+            if (!$("#search_column").val() || $("#search_column").val() == ""){
+                return;
+            }
+
+            var search_term = $("#search").val();
+            var col = $("#search_column").val();
+
+            mlhDash.searchData(col,search_term);
+        });
+
+        $(".sorting").click(function(e){
+            mlhDash.sortRefresh($(e.target).attr("id"));
+        });
+    </script>
+
+</body>
+</html>

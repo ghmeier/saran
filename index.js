@@ -1,5 +1,6 @@
 var express = require('express');
 var request = require("request");
+var path = require("path");
 var userService = require('./user-service.js');
 var app = express();
 
@@ -21,7 +22,7 @@ app.use(function(req, res, next) {
 app.set('port', (process.env.PORT || 5000));
 
 app.get('/', function(request, response) {
-  response.json({message:"success"})
+  response.sendFile(path.join(__dirname+"/views/index.html"));
 });
 
 app.get('/addViewer', function(req,response) {
@@ -43,7 +44,7 @@ app.get('/getAllUsers', function(req, response) {
 });
 
 app.get('/merge', function(req, response) {
-    request.get("https://my.mlh.io/api/v1/users?client_id=79020d89d525fb39d0d5c704e013f45a4ea3d85a732a5b3eba18617b95250cfe&secret=d500f122f2111b0c2797834b75e006885f8cd73d7f6e41fa2438e068a815df80",function(err,body,res){
+    request.get("<MLH_URL>",function(err,body,res){
         var parsed = JSON.parse(body.body).data;
         var members = {};
         for (var i=0; i<parsed.length; i++) {
@@ -56,9 +57,9 @@ app.get('/merge', function(req, response) {
             delete cur.id;
         }
         request.get({
-            url: "https://us10.api.mailchimp.com/3.0/lists/3e68b09893/members?count=1000&fields=members.email_address,members.merge_fields",
+            url: "<MAILCHIMP_URL>",
             headers:{
-                "Authorization":"apikey 53e48c48bc0cc6a35ab62c0c95eee883-us10",
+                "Authorization":"apikey <MAILCHIMP_API_KEY>",
                 "content-type": "application/json",
             },
             json:true
@@ -135,9 +136,9 @@ app.post('/signup', function(req, response) {
             userService.putUser(user.mlh_id, user);
         });
         request.post({
-            url: "https://us10.api.mailchimp.com/3.0/lists/3e68b09893/members",
+            url: "https://us10.api.mailchimp.com/3.0/lists/<LIST_ID>/members",
             headers:{
-                "Authorization":"apikey 53e48c48bc0cc6a35ab62c0c95eee883-us10",
+                "Authorization":"apikey <MAILCHIMP_API_KEY>",
                 "content-type": "application/json",
             },
             json:true,

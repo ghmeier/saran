@@ -2,7 +2,7 @@ var MongoClient = require("mongodb").MongoClient;
 var ObjectId = require("mongodb").ObjectID;
 var request = require("request");
 
-var mongoUrl = process.env["MONGODB_URI"] || "mongodb://heroku_53t10wmx:fj9e864otn66tk8l9iicr0b2e6@ds029705.mlab.com:29705/heroku_53t10wmx";
+var mongoUrl = process.env["MONGODB_URI"];
 
 module.exports.putUser = putUser;
 module.exports.putUsers = putUsers;
@@ -97,6 +97,7 @@ function getAllUsers(token, checked_in, cb) {
     if (checked_in) {
       query.checked_in = true;
     }
+    console.log(query,checked_in);
 
     mongoConnect(function(db) {
 
