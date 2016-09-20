@@ -1,7 +1,6 @@
 # Saran
 
 ## What's Saran?
----
 A thin, protective coating for MyMLH that'll let you view your MyMLH data and add functionality with minimal code (because most of it's right here).
 
 For [HackISU](http://hackisu.org), I used MyMLH as a primary registrations tool because it's simple, reliable, and has all the fields for a memberf event. I ran into a problem though, when trying to integrate with other services (like mailchimp), or visualize the data. My life turned into a living hell of downloading an importing csv's. 
@@ -11,7 +10,6 @@ So, like any hacker, I started writing code to help me out which led to [MyMLH D
 So, how does it work??
 
 ## Let's Get Started.
----
 To get started, you can deploy to a Heorku dyno:
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
@@ -19,13 +17,14 @@ To get started, you can deploy to a Heorku dyno:
 *If that's not your style, you'll need a server running node and a mongodb instance*
 
 Then, head on over to [MyMLH](https://my.mlh.io) and register a new application.
-[!]()
+![New MyMLH](https://github.com/ghmeier/saran/blob/master/img/new-my-mlh.png)
 
 Now, you need to set two heroku config variables, APP_ID (your MyMLH application id) and secret (your MyMLH application secret).
-[!]()
+
+![Heroku Config](https://github.com/ghmeier/saran/blob/master/img/config-screen.png)
 
 Sweet. Basic config is up. If you open `<app-name>.herokuapp.com`, you should see something like this:
-[!]()
+![Running App](https://github.com/ghmeier/saran/blob/master/img/empty%20screen.png)
 
 ## Integrate with registration
 Saran has a `POST /user` endpoint which will let you create a new user solely from their MyMLH `access_token` (it's a url parameter at the callback you set initially). The following snippet adds the user based on their MyMLH `access_token`: 
