@@ -30,6 +30,20 @@ app.get('/', function(request, response) {
     });
 });
 
+app.get('/signup', function(request, response) {
+    response.render("signup",{
+        APP_ID: process.env['APP_ID'],
+        REDIRECT: process.env['REDIRECT']
+    });
+});
+
+app.get('/callback', function(request, response) {
+    response.render("callback",{
+        APP_ID: process.env['APP_ID'],
+        REDIRECT: process.env['REDIRECT']
+    });
+});
+
 app.get('/js/functions.js', function(request, response) {
     response.sendFile(path.join(__dirname+"/js/functions.js"));
 });
