@@ -12,8 +12,8 @@
 
     <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
     <script>
-        var APP_ID = "189235eae180715ccf83c229798df38d3b9dc64f482e584522c238c641862f9e";//"<%= APP_ID %>";
-        var REDIRECT = "http://localhost:5000/callback"//"<%= REDIRECT %>";
+        var APP_ID = "<%= APP_ID %>";
+        var REDIRECT = "<%= REDIRECT %>";
 
         var toMlh = function() {
             window.location.assign("https://my.mlh.io/oauth/authorize?client_id="+APP_ID+"&redirect_uri="+REDIRECT+"&response_type=token");
