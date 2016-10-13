@@ -3,13 +3,18 @@
 <html>
 <head>
     <title>Sign Up</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
 </head>
 <body>
-
-    <div style="margin-left:auto;margin-right:auto">
-        <button onclick="toMlh()">Sign Up!</button>
+    <div class="container">
+        <div class="section">
+            <div class="row">
+                <div class="col s4 offset-s4">
+                    <a onclick="toMlh()" class="waves-effect waves-light btn-large">Sign Up!</a>
+                </div>
+            </div>
+        </div>
     </div>
-
     <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
     <script>
         var APP_ID = "<%= APP_ID %>";

@@ -3,41 +3,49 @@
 <html>
 <head>
     <title>Callback</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
 </head>
 <body>
-    <div>
-        <table class="table icon-red">
-            <tbody>
-                <tr>
-                    <td>Name</td><td id="name"></td>
-                </tr>
-                <tr>
-                    <td>School</td> <td id="school"></td>
-                </tr>
-                <tr>
-                    <td>Major</td><td id="major"></td>
-                </tr>
-                <tr>
-                    <td>Email</td> <td id="email"></td>
-                </tr>
-                <tr>
-                    <td>Shirt Size</td> <td id="shirt"></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div>
-    <label class="" for='resume'>Resume&nbsp;&nbsp;</label>
-    <input name="resume" id="resume" placeholder="http://"></input>
-    <br>
-    <label class="" for='github'>github&nbsp;&nbsp;</label>
-    <input name="github" id="github" placeholder="http://github.com/"></input>
-    </div>
-    <div>
-        <button onclick="postData()">Confirm</button>
-    </div>
-    <div id="result">
+    <div class="container">
+        <div class="section">
+            <div class="row">
+                <table class="table icon-red">
+                    <tbody>
+                        <tr>
+                            <td>Name</td><td id="name"></td>
+                        </tr>
+                        <tr>
+                            <td>School</td> <td id="school"></td>
+                        </tr>
+                        <tr>
+                            <td>Major</td><td id="major"></td>
+                        </tr>
+                        <tr>
+                            <td>Email</td> <td id="email"></td>
+                        </tr>
+                        <tr>
+                            <td>Shirt Size</td> <td id="shirt"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row">
+                <label class="" for='resume'>Resume&nbsp;&nbsp;</label>
+                <input name="resume" id="resume" placeholder="http://"></input>
+            </div>
+            <div class="row">
+                <label class="" for='github'>github&nbsp;&nbsp;</label>
+                <input name="github" id="github" placeholder="http://github.com/"></input>
+            </div>
+            <div class="row">
+                <div class="col s4 offset-s4">
+                    <a onclick="postData()" class="waves-effect waves-light btn-large">Confirm</a>
+                </div>
+            </div>
+            <div id="result">
 
+            </div>
+        </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
