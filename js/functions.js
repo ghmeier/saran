@@ -151,7 +151,7 @@ MyMlhDash.prototype.getTags = function (data) {
 };
 
 MyMlhDash.prototype.getEl = function (user) {
-	var el = '';
+	var el = '<tr>';
 	if (typeof user.checked_in === 'boolean') {
 		var checkedIn = '<td><input onclick=\'checkIn("' + user.mlh_id + '")\' type=\'checkbox\'  id=\'' + user.mlh_id + '\'';
 		if (user.checked_in) {
@@ -160,15 +160,15 @@ MyMlhDash.prototype.getEl = function (user) {
 		checkedIn += '/><label style=\'height:15px;margin-left:0px;padding-left:0px\' for=\'' + user.mlh_id + '\'></label>';
 		el += checkedIn;
 	}
-	el = this.addTDProperty(user.email);
-	el = this.addTDProperty(user.first_name);
-	el = this.addTDProperty(user.last_name);
-	el = this.addTDProperty(user.major);
-	el = this.addTDProperty(user.shirt_size);
-	el = this.addTDProperty(user.dietary_restrictions);
-	el = this.addTDProperty(user.school_name);
-	el = this.addTDProperty(user.school_name);
-	el = this.addTDProperty(user.phone_number);
+	el = this.addTDProperty(el, user.email);
+	el = this.addTDProperty(el, user.first_name);
+	el = this.addTDProperty(el, user.last_name);
+	el = this.addTDProperty(el, user.major);
+	el = this.addTDProperty(el, user.shirt_size);
+	el = this.addTDProperty(el, user.dietary_restrictions);
+	el = this.addTDProperty(el, user.school_name);
+	el = this.addTDProperty(el, user.school_name);
+	el = this.addTDProperty(el, user.phone_number);
 	if (user.github) {
 		var uname = user.github.split('/').pop();
 		el += '<td><a href="https://github.com/' + uname + '" target="_blank">' + uname + '</a></td>';
