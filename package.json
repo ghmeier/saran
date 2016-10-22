@@ -4,7 +4,8 @@
   "description": "A thin, stretchy, protective layer around MyMLH",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "test": "xo"
   },
   "dependencies": {
     "body-parser": "^1.14.1",
@@ -21,10 +22,13 @@
     "type": "git",
     "url": "https://github.com/ghmeier/saran"
   },
-"keywords": [
+  "keywords": [
     "node",
     "heroku",
     "express"
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "xo": {
+    "esnext": true
+  }
 }
