@@ -104,7 +104,10 @@ MyMlhDash.prototype.getCountTags = function (data) {
 
 MyMlhDash.prototype.getTags = function (data) {
 	var md = [];
-	var keys = Object.keys(data[0]);
+	var keys = [];
+	if (data.length > 0) {
+		keys = Object.keys(data[0]);
+	}
 	var i = 0;
 
 	for (i = 0; i < keys.length; i++) {
