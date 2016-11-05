@@ -50,6 +50,7 @@ app.get('/js/functions.js', (request, response) => {
 app.get('/token', tokenHelper.tokenList);
 app.post('/token', tokenHelper.addToken);
 
+// user access
 app.post('/user/:id/in', userHelper.checkIn);
 app.post('/user', userHelper.signup);
 app.get('/user', userHelper.userList);
