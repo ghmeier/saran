@@ -119,6 +119,7 @@ MyMlhDash.prototype.getTags = function (data) {
 	for (i = 0; i < data.length; i++) {
 		var cur = data[i];
 		cur.school_name = cur.school.name;
+		delete cur.school;
 
 		if (cur.major) {
 			var major_list = cur.major.split(',');
