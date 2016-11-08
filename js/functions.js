@@ -171,7 +171,6 @@ MyMlhDash.prototype.getEl = function (user) {
 	el = this.addTDProperty(el, user.shirt_size);
 	el = this.addTDProperty(el, user.dietary_restrictions);
 	el = this.addTDProperty(el, user.school_name);
-	el = this.addTDProperty(el, user.school_name);
 	el = this.addTDProperty(el, user.phone_number);
 	if (user.github) {
 		var uname = user.github.split('/').pop();
