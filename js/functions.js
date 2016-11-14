@@ -83,14 +83,16 @@ MyMlhDash.prototype.getCountTags = function (data) {
 	var md = [];
 	var keys = Object.keys(data);
 	var unordered = [];
-	for (var i = 0; i < keys.length; i++) {
+	var i;
+
+	for (i = 0; i < keys.length; i++) {
 		unordered.push({name: keys[i], val: data[keys[i]]});
 	}
 	data = _.sortBy(unordered, function (item) {
 		return -item.val;
 	});
 
-	for (var i = 0; i < unordered.length; i++) {
+	for (i = 0; i < unordered.length; i++) {
 		var el = '<tr><td>' + data[i].name +
 				'</td><td>' + data[i].val +
 				'</td></tr>';
