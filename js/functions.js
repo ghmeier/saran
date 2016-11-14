@@ -270,7 +270,8 @@ MyMlhDash.prototype.getMyMLHData = function (token) {
 
 MyMlhDash.prototype.initRegistrantsChart = function () {
 	var categories = {};
-	for (var i = 0; i < this.data.length; i++) {
+	var i;
+	for (i = 0; i < this.data.length; i++) {
 		var updatedDate = new Date(this.data[i].updated_at);
 		var datestring = String(updatedDate.getFullYear()) +
 						String(updatedDate.getMonth()) +
@@ -288,8 +289,7 @@ MyMlhDash.prototype.initRegistrantsChart = function () {
 
 	var names = [];
 	var vals = [];
-
-	for (var i = 0; i < Object.keys(categories).length; i++) {
+	for (i = 0; i < Object.keys(categories).length; i++) {
 		var key = Object.keys(categories)[i];
 
 		names.push(categories[key].name);
