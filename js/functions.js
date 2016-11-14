@@ -43,9 +43,8 @@ var getUrlParameter = function (sParam) {
 	var sPageURL = decodeURIComponent(window.location.search.substring(1));
 	var sURLVariables = sPageURL.split('&');
 	var sParameterName;
-	var i = 0;
 
-	for (i = 0; i < sURLVariables.length; i++) {
+	for (var i = 0; i < sURLVariables.length; i++) {
 		sParameterName = sURLVariables[i].split('=');
 
 		if (sParameterName[0] === sParam) {
@@ -84,8 +83,7 @@ MyMlhDash.prototype.getCountTags = function (data) {
 	var md = [];
 	var keys = Object.keys(data);
 	var unordered = [];
-	var i = 0;
-	for (i = 0; i < keys.length; i++) {
+	for (var i = 0; i < keys.length; i++) {
 		unordered.push({name: keys[i], val: data[keys[i]]});
 	}
 	data = _.sortBy(unordered, function (item) {
@@ -108,9 +106,8 @@ MyMlhDash.prototype.getTags = function (data) {
 	if (data.length > 0) {
 		keys = Object.keys(data[0]);
 	}
-	var i = 0;
 
-	for (i = 0; i < keys.length; i++) {
+	for (var i = 0; i < keys.length; i++) {
 		if (keys[i]) {
 			$('#' + keys[i]).show();
 		}
@@ -250,8 +247,7 @@ MyMlhDash.prototype.getMyMLHData = function (token) {
 
 MyMlhDash.prototype.initRegistrantsChart = function () {
 	var categories = {};
-	var i = 0;
-	for (i = 0; i < this.data.length; i++) {
+	for (var i = 0; i < this.data.length; i++) {
 		var updatedDate = new Date(this.data[i].updated_at);
 		var datestring = String(updatedDate.getFullYear()) +
 						String(updatedDate.getMonth()) +
@@ -270,7 +266,7 @@ MyMlhDash.prototype.initRegistrantsChart = function () {
 	var names = [];
 	var vals = [];
 
-	for (i = 0; i < Object.keys(categories).length; i++) {
+	for (var i = 0; i < Object.keys(categories).length; i++) {
 		var key = Object.keys(categories)[i];
 
 		names.push(categories[key].name);
@@ -304,10 +300,9 @@ MyMlhDash.prototype.searchData = function (column, term) {
 	var matched = [];
 
 	for (var i = 0; i < this.data.length; i++) {
-		if (column !== 'id' && this.data[i][column].search(new RegExp(term.toLowerCase(), 'i')) === 0) {
-			matched.push(this.data[i]);
-		} else if (column === 'id' && this.data[i][column] === parseInt(term, 10)) {
-			matched.push(this.data[i]);
+		if ((column !== 'id' && this.data[i][column].search(new RegExp(term.toLowerCase(), 'i')) === 0) ||
+			(column === 'id' && this.data[i][column] === parseInt(term, 10))) {
+				matched.push(this.data[i]);
 		}
 	}
 
