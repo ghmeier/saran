@@ -1,5 +1,5 @@
 /* globals $, _, window, document Materialize, Clusterize */
-/* eslint-disable no-var, object-shorthand, prefer-arrow-callback */
+/* eslint-disable no-var, object-shorthand, prefer-arrow-callback, block-scoped-var */
 
 var download = function (name, text) {
 	var pom = document.createElement('a');
@@ -90,7 +90,7 @@ MyMlhDash.prototype.getCountTags = function (data) {
 		return -item.val;
 	});
 
-	for (i = 0; i < unordered.length; i++) {
+	for (var i = 0; i < unordered.length; i++) {
 		var el = '<tr><td>' + data[i].name +
 				'</td><td>' + data[i].val +
 				'</td></tr>';
@@ -107,13 +107,13 @@ MyMlhDash.prototype.getTags = function (data) {
 		keys = Object.keys(data[0]);
 	}
 
-	for (var i = 0; i < keys.length; i++) {
+	for (let i = 0; i < keys.length; i++) {
 		if (keys[i]) {
 			$('#' + keys[i]).show();
 		}
 	}
 	/* eslint-disable camelcase */
-	for (i = 0; i < data.length; i++) {
+	for (var i = 0; i < data.length; i++) {
 		var cur = data[i];
 		cur.school_name = cur.school.name;
 		delete cur.school;
@@ -302,7 +302,7 @@ MyMlhDash.prototype.searchData = function (column, term) {
 	for (var i = 0; i < this.data.length; i++) {
 		if ((column !== 'id' && this.data[i][column].search(new RegExp(term.toLowerCase(), 'i')) === 0) ||
 			(column === 'id' && this.data[i][column] === parseInt(term, 10))) {
-				matched.push(this.data[i]);
+			matched.push(this.data[i]);
 		}
 	}
 
