@@ -102,53 +102,74 @@ MyMlhDash.prototype.getCountTags = function (data) {
 
 MyMlhDash.prototype.getTags = function (data) {
 	var md = [];
-	var keys = [];
-	if (data.length > 0) {
-		keys = Object.keys(data[0]);
-	}
+	this.showHeaders(data);
 
-	for (let i = 0; i < keys.length; i++) {
-		if (keys[i]) {
-			$('#' + keys[i]).show();
-		}
-	}
 	/* eslint-disable camelcase */
 	for (var i = 0; i < data.length; i++) {
 		var cur = data[i];
 		cur.school_name = cur.school.name;
 		delete cur.school;
 
-		if (cur.major) {
-			var major_list = cur.major.split(',');
-			for (var j = 0; j < major_list.length; j++) {
-				var cur_major = major_list[j];
-				if (!this.majors[cur_major]) {
-					this.majors[cur_major] = 0;
-				}
-				this.majors[cur_major]++;
-			}
-		}
+		this.countMajors(cur.major);
+		this.countShirtSize(cur.shirt_size);
+		this.countSchool(cur.school_name);
 
-		if (cur.shirt_size) {
-			var cur_size = cur.shirt_size.replace(/\s/g, '');
-			if (!this.sizes[cur_size]) {
-				this.sizes[cur_size] = 0;
-			}
-			this.sizes[cur_size]++;
-		}
-
-		if (cur.school_name) {
-			var cur_school = cur.school_name;
-			if (!this.schools[cur_school]) {
-				this.schools[cur_school] = 0;
-			}
-			this.schools[cur_school]++;
-		}
 		md.push(this.getEl(cur));
 	}
 	/* eslint-enable camelcase */
 
 	return md;
+};
+
+MyMlhDash.prototype.countSchool = function (school) {
+	if (!school) {
+		return;
+	}
+
+	if (!this.schools[school]) {
+		this.schools[school] = 0;
+	}
+	this.schools[school]++;
+};
+
+MyMlhDash.prototype.countShirtSize = function (shirtSize) {
+	if (!shirtSize) {
+		return;
+	}
+
+	var size = shirtSize.replace(/\s/g, '');
+	if (!this.sizes[size]) {
+		this.sizes[size] = 0;
+	}
+	this.sizes[size]++;
+};
+
+MyMlhDash.prototype.countMajors = function (majors) {
+	if (!majors) {
+		return;
+	}
+
+	var list = majors.split(',');
+	for (var j = 0; j < list.length; j++) {
+		var major = list[j];
+		if (!this.majors[major]) {
+			this.majors[major] = 0;
+		}
+		this.majors[major]++;
+	}
+};
+
+MyMlhDash.prototype.showHeaders = function (data) {
+	var keys = [];
+	if (data.length > 0) {
+		keys = Object.keys(data[0]);
+	}
+
+	for (var i = 0; i < keys.length; i++) {
+		if (keys[i]) {
+			$('#' + keys[i]).show();
+		}
+	}
 };
 
 MyMlhDash.prototype.getEl = function (user) {
