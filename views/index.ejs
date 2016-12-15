@@ -277,8 +277,9 @@
             delay(function(){
                 var search_term = $("#search").val();
                 var col = $("#search_column").val();
+                console.log(search_term,col);
 
-                mlhDash.searchData(col,search_term);
+                mlhDash.searchData(col.toLowerCase(),search_term);
 
             },300);
         });
