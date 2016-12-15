@@ -109,7 +109,9 @@ MyMlhDash.prototype.getTags = function (data) {
 	/* eslint-disable camelcase */
 	for (var i = 0; i < data.length; i++) {
 		var cur = data[i];
-		cur.school_name = cur.school.name;
+		if (!cur.school_name) {
+			cur.school_name = cur.school.name;
+		}
 		delete cur.school;
 
 		this.countMajors(cur.major);
@@ -323,7 +325,7 @@ MyMlhDash.prototype.searchData = function (column, term) {
 	var matched = [];
 
 	for (var i = 0; i < this.data.length; i++) {
-		if ((column !== 'id' && this.data[i][column].search(new RegExp(term.toLowerCase(), 'i')) === 0) ||
+		if ((column !== 'id' && this.data[i][column] && this.data[i][column].search(new RegExp(term.toLowerCase(), 'i')) === 0) ||
 			(column === 'id' && this.data[i][column] === parseInt(term, 10))) {
 			matched.push(this.data[i]);
 		}
