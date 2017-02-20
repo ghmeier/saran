@@ -292,8 +292,8 @@ MyMlhDash.prototype.initRegistrantsChart = function () {
 	var names = [];
 	var vals = [];
 	var keys = Object.keys(categories).sort(function(a, b){
-		if a < b return -1;
-		if a > b return 1;
+		if (a < b) return -1;
+		if (a > b) return 1;
 		return 0;
 	})
 	for (i = 0; i < keys.length; i++) {
