@@ -276,13 +276,13 @@ MyMlhDash.prototype.initRegistrantsChart = function () {
 	for (i = 0; i < this.data.length; i++) {
 		var updatedDate = new Date(this.data[i].updated_at);
 		var datestring = String(updatedDate.getFullYear()) +
-						String(updatedDate.getMonth()) +
+						String(updatedDate.getMonth()+1) +
 						String(updatedDate.getDate());
 		if (!categories[datestring]) {
 			categories[datestring] = {};
 			categories[datestring].val = 0;
 			categories[datestring].name = String(updatedDate.getFullYear()) + '-' +
-										String(updatedDate.getMonth()) + '-' +
+										String(updatedDate.getMonth()+1) + '-' +
 										String(updatedDate.getDate());
 		}
 
@@ -291,8 +291,13 @@ MyMlhDash.prototype.initRegistrantsChart = function () {
 
 	var names = [];
 	var vals = [];
-	for (i = 0; i < Object.keys(categories).length; i++) {
-		var key = Object.keys(categories)[i];
+	var keys = Object.keys(categories).sort(function(a, b){
+		if a < b return -1;
+		if a > b return 1;
+		return 0;
+	})
+	for (i = 0; i < keys.length; i++) {
+		var key = keys[i];
 
 		names.push(categories[key].name);
 		vals.push(categories[key].val);
