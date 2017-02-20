@@ -275,9 +275,9 @@ MyMlhDash.prototype.initRegistrantsChart = function () {
 	var i;
 	for (i = 0; i < this.data.length; i++) {
 		var updatedDate = new Date(this.data[i].updated_at);
-		var datestring = String(updatedDate.getFullYear()) +
-						String(updatedDate.getMonth()+1) +
-						String(updatedDate.getDate());
+		var datestring = updatedDate.getFullYear() +
+						updatedDate.getMonth()+1 +
+						updatedDate.getDate();
 		if (!categories[datestring]) {
 			categories[datestring] = {};
 			categories[datestring].val = 0;
