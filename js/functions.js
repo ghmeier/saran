@@ -16,6 +16,14 @@ var download = function (name, text) {
 	}
 };
 
+var delay = (function () {
+	var timer = 0;
+	return function (callback, ms) {
+		clearTimeout(timer);
+		timer = setTimeout(callback, ms);
+	};
+})();
+
 /* We're using these functions in index.html */
 /* eslint-disable no-unused-vars, camelcase */
 var checkIn = function (id) {
@@ -26,18 +34,12 @@ var checkIn = function (id) {
 		dataType: 'json',
 		contentType: 'application/json',
 		data: JSON.stringify({checked_in: checkedIn}),
-		success: function () {}
+		success: function () {
+			$("#checked_in_control").trigger("click", {id: id, checked: checkedIn});
+		}
 	});
 };
 /* eslint-enable camelcase */
-
-var delay = (function () {
-	var timer = 0;
-	return function (callback, ms) {
-		clearTimeout(timer);
-		timer = setTimeout(callback, ms);
-	};
-})();
 
 var getUrlParameter = function (sParam) {
 	var sPageURL = decodeURIComponent(window.location.search.substring(1));
@@ -56,6 +58,7 @@ var getUrlParameter = function (sParam) {
 
 var MyMlhDash = function (app, secret) {
 	this.data = {};
+	this.ids = {};
 	this.schools = {};
 	this.sizes = {};
 	this.majors = {};
@@ -101,6 +104,17 @@ MyMlhDash.prototype.getCountTags = function (data) {
 
 	return md;
 };
+
+MyMlhDash.prototype.setCheckedIn = function(id, checkedIn) {
+	var index = this.ids[id];
+	if (index === null) {
+		return;
+	}
+	if (!this.data[index]){
+		return;
+	}
+	this.data[index]["checked_in"] = checkedIn;
+}
 
 MyMlhDash.prototype.getTags = function (data) {
 	var md = [];
@@ -179,11 +193,13 @@ MyMlhDash.prototype.showHeaders = function (data) {
 MyMlhDash.prototype.getEl = function (user) {
 	var el = '<tr>';
 	if (typeof user.checked_in === 'boolean') {
-		var checkedIn = '<td><input onclick=\'checkIn("' + user.mlh_id + '")\' type=\'checkbox\'  id=\'' + user.mlh_id + '\'';
+		var checkedIn = '<td><input onClick=\'checkIn(\"'+user.mlh_id+'\")\' type=\'checkbox\'  id=\'' + user.mlh_id + '\'';
+
 		if (user.checked_in) {
 			checkedIn += 'checked';
 		}
 		checkedIn += '/><label style=\'height:15px;margin-left:0px;padding-left:0px\' for=\'' + user.mlh_id + '\'></label>';
+
 		el += checkedIn;
 	}
 	el = this.addTDProperty(el, user.email);
@@ -274,6 +290,7 @@ MyMlhDash.prototype.initRegistrantsChart = function () {
 	var categories = {};
 	var i;
 	for (i = 0; i < this.data.length; i++) {
+		this.ids[this.data[i].mlh_id] = i;
 		var updatedDate = new Date(this.data[i].updated_at);
 		var datestring = updatedDate.getFullYear()*10000 +
 						(updatedDate.getMonth()+1)*100 +
@@ -328,6 +345,14 @@ MyMlhDash.prototype.searchData = function (column, term) {
 	var matched = [];
 
 	for (var i = 0; i < this.data.length; i++) {
+		if (column == "checked_in") {
+			if (term && this.data[i][column]){
+				matched.push(this.data[i]);
+			} else if (!term) {
+				matched.push(this.data[i]);
+			}
+			continue;
+		}
 		if ((column !== 'id' && this.data[i][column] && this.data[i][column].search(new RegExp(term.toLowerCase(), 'i')) === 0) ||
 			(column === 'id' && this.data[i][column] === parseInt(term, 10))) {
 			matched.push(this.data[i]);
