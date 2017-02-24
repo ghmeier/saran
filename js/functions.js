@@ -192,6 +192,10 @@ MyMlhDash.prototype.showHeaders = function (data) {
 
 MyMlhDash.prototype.getEl = function (user) {
 	var el = '<tr>';
+	if (user.updated_at){
+		var signUpDate = new Date(user.updated_at);
+		console.log(signUpDate.toISOString());
+	}
 	if (typeof user.checked_in === 'boolean') {
 		var checkedIn = '<td><input onClick=\'checkIn(\"'+user.mlh_id+'\")\' type=\'checkbox\'  id=\'' + user.mlh_id + '\'';
 
