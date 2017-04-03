@@ -54,6 +54,7 @@ app.post('/token', tokenHelper.addToken);
 app.post('/user/:id/in', userHelper.checkIn);
 app.post('/user', userHelper.signup);
 app.get('/user', userHelper.userList);
+app.post('/import', userHelper.importUsers);
 
 app.listen(app.get('port'), () => {
 	console.log('Node app is running on port', app.get('port'));
