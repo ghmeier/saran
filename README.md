@@ -53,7 +53,7 @@ I built Saran with the flexibility to allow sponsors to view the dashboard as we
 
 To create a token:
 ```
-POST /token -d {"token":"sharkhacks-admin","permission":"checked_in,first_name,last_name,email_address,school,phone_number"}
+POST /token -d {"token":"sharkhacks-admin","permission":"checked_in,first_name,last_name,email,school,phone_number"}
 ```
 
 Now, you can navigate to `<app-name>.herokuapp.com?token=sharkhacks-admin` and it will fill the columns with `checked_in`, `first_name`, `last_name`, `email_address`, `school`, and `phone_number`. How neat!
