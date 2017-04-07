@@ -18,6 +18,7 @@
     </style>
 </head>
 <body>
+    <div id="checked_in_control" style="display:none"></div>
     <div class="navbar-fixed">
         <nav>
           <div class="nav-wrapper">
@@ -37,6 +38,11 @@
             <div class="row">
                 <div class="col s3">
                     <h5>Registrants:<span id="stats"></span></h5>
+                    <div>
+                        Only Checked In
+                        <input type="checkbox"  id="filter_checked_in" />
+                        <label style="height:15px;margin-left:0px;padding-left:0px" for="filter_checked_in"></label>
+                    </div>
                 </div>
                 <div class="input-field col s3">
                     <select id="search_column" class="validate">
@@ -282,8 +288,12 @@
             },300);
         });
 
-        $(".checked_in_box").click(function(e) {
-            console.log(e.target);
+        $("#filter_checked_in").click(function(e) {
+            mlhDash.searchData("checked_in", e.target.checked);
+        });
+
+        $("#checked_in_control").click(function(e, opts) {
+            mlhDash.setCheckedIn(opts.id, opts.checked);
         });
 
         $("#search_column").change(function(){
