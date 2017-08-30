@@ -69,6 +69,7 @@ var MyMlhDash = function (app, secret) {
 
 	this.APP_ID = app;
 	this.SECRET = secret;
+	this.DEADLINE = deadline;
 };
 
 MyMlhDash.prototype.sortRefresh = function (key) {
@@ -194,8 +195,7 @@ MyMlhDash.prototype.getEl = function (user) {
 	var el = '<tr>';
 	if (user.updated_at){
 		var signUpDate = new Date(user.updated_at);
-		var deadline = new Date("2017-04-06T23:59:59.9999Z");
-		if (signUpDate.getTime() > deadline.getTime()){
+		if (signUpDate.getTime() > this.deadline) {
 			el = '<tr style=\"border-color:red;border-width:1px;border-style:solid\">';
 		}
 	}
