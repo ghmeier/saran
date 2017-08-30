@@ -195,9 +195,13 @@ MyMlhDash.prototype.getEl = function (user) {
 	var el = '<tr>';
 	if (user.updated_at){
 		var signUpDate = new Date(user.updated_at);
-		if (signUpDate.getTime() > this.deadline) {
-			el = '<tr style=\"border-color:red;border-width:1px;border-style:solid\">';
+		if(this.deadline){
+			var deadline = new Date(this.deadline);
+			if (signUpDate.getTime() > deadline.getTime()) {
+				el = '<tr style=\"border-color:red;border-width:1px;border-style:solid\">';
+			}
 		}
+
 	}
 	if (typeof user.checked_in === 'boolean') {
 		var checkedIn = '<td><input onClick=\'checkIn(\"'+user.mlh_id+'\")\' type=\'checkbox\'  id=\'' + user.mlh_id + '\'';

@@ -20,7 +20,8 @@ To get started, you can deploy to a Heroku dyno:
 Then, head on over to [MyMLH](https://my.mlh.io) and register a new application.
 ![New MyMLH](https://github.com/ghmeier/saran/blob/master/img/new-my-mlh.png)
 
-Now, you need to set two heroku config variables, APP_ID (your MyMLH application id) and secret (your MyMLH application secret).
+Now, you need to set two heroku config variables: APP_ID (your MyMLH application id), SECRET (your MyMLH application secret).
+You may optionally create a DEADLINE variable, (an optional deadline date for registration) in UTC format e.g. 2017-01-01T23:59:59.9999Z. By creating a DEADLINE variable, users that register after the set deadline will have a red outline in Saran.
 
 ![Heroku Config](https://github.com/ghmeier/saran/blob/master/img/config-screen.png)
 
