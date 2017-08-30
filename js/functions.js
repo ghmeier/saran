@@ -195,8 +195,10 @@ MyMlhDash.prototype.getEl = function (user) {
 	var el = '<tr>';
 	if (user.updated_at){
 		var signUpDate = new Date(user.updated_at);
+		console.log(this.DEADLINE);
 		if(this.DEADLINE){
 			var deadline = new Date(this.DEADLINE);
+			console.log(deadline);
 			if (signUpDate.getTime() > deadline.getTime()) {
 				el = '<tr style=\"border-color:red;border-width:1px;border-style:solid\">';
 			}
