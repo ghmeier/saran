@@ -53,10 +53,10 @@ I built Saran with the flexibility to allow sponsors to view the dashboard as we
 
 To create a token:
 ```
-POST /token -d {"token":"sharkhacks-admin","permission":"checked_in,first_name,last_name,email,school,phone_number"}
+POST /token -d {"token":"sharkhacks-admin","permission":"mlh_id,checked_in,first_name,last_name,email,school,phone_number"}
 ```
 
-Now, you can navigate to `<app-name>.herokuapp.com?token=sharkhacks-admin` and it will fill the columns with `checked_in`, `first_name`, `last_name`, `email_address`, `school`, and `phone_number`. How neat!
+Now, you can navigate to `<app-name>.herokuapp.com?token=sharkhacks-admin` and it will fill the columns with 'mlh_id', `checked_in`, `first_name`, `last_name`, `email_address`, `school`, and `phone_number`. How neat!
 
 ## What Next?
 Now, you can extend saran to fit your needs, storing additional parameters or integrating with mailchimp (there's sample code in `user-helper.js`), all synced up with your MyMLH registrants.
