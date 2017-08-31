@@ -56,7 +56,7 @@ var getUrlParameter = function (sParam) {
 };
 /* eslint-disable no-unused-vars */
 
-var MyMlhDash = function (app, secret) {
+var MyMlhDash = function (app, secret, deadline) {
 	this.data = {};
 	this.ids = {};
 	this.schools = {};
@@ -69,6 +69,7 @@ var MyMlhDash = function (app, secret) {
 
 	this.APP_ID = app;
 	this.SECRET = secret;
+	this.DEADLINE = deadline;
 };
 
 MyMlhDash.prototype.sortRefresh = function (key) {
@@ -192,12 +193,21 @@ MyMlhDash.prototype.showHeaders = function (data) {
 
 MyMlhDash.prototype.getEl = function (user) {
 	var el = '<tr>';
+	console.log(this.DEADLINE);
+	var date = new Date(this.DEADLINE);
+	console.log(date);
+	console.log(user.updated_at);
 	if (user.updated_at){
 		var signUpDate = new Date(user.updated_at);
-		var deadline = new Date("2017-02-15T23:59:59.9999Z");
-		if (signUpDate.getTime() > deadline.getTime()){
-			el = '<tr style=\"border-color:red;border-width:1px;border-style:solid\">';
+		console.log(this.DEADLINE);
+		if(this.DEADLINE){
+			var deadline = new Date(this.DEADLINE);
+			console.log(deadline);
+			if (signUpDate.getTime() > deadline.getTime()) {
+				el = '<tr style=\"border-color:red;border-width:1px;border-style:solid\">';
+			}
 		}
+
 	}
 	if (typeof user.checked_in === 'boolean') {
 		var checkedIn = '<td><input onClick=\'checkIn(\"'+user.mlh_id+'\")\' type=\'checkbox\'  id=\'' + user.mlh_id + '\'';

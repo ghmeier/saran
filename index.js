@@ -25,7 +25,8 @@ app.set('port', (process.env.PORT || 5000));
 app.get('/', (request, response) => {
     response.render('index', {
         APP_ID: process.env.APP_ID,
-        SECRET: process.env.SECRET
+        SECRET: process.env.SECRET,
+        DEADLINE: process.env.DEADLINE
     });
 });
 

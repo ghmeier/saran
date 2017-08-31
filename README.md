@@ -20,7 +20,8 @@ To get started, you can deploy to a Heroku dyno:
 Then, head on over to [MyMLH](https://my.mlh.io) and register a new application.
 ![New MyMLH](https://github.com/ghmeier/saran/blob/master/img/new-my-mlh.png)
 
-Now, you need to set two heroku config variables, APP_ID (your MyMLH application id) and secret (your MyMLH application secret).
+Now, you need to set two heroku config variables: APP_ID (your MyMLH application id), SECRET (your MyMLH application secret).
+You may optionally create a DEADLINE variable, (an optional deadline date for registration) in UTC format e.g. 2017-01-01T23:59:59.9999Z. By creating a DEADLINE variable, users that register after the set deadline will have a red outline in Saran.
 
 ![Heroku Config](https://github.com/ghmeier/saran/blob/master/img/config-screen.png)
 
@@ -49,13 +50,14 @@ Great! Now you can add users from you hackathon home page. *It's easy to send mo
 You have users, now how can you view them?
 
 ## Adding User Tokens
-I built Saran with the flexibility to allow sponsors to view the dashboard as well as organizers. However, not everyone should be able to see all (or any) of the data. To filter data, we need to create tokens which the back end uses to validate what a client can (and cannot see).
+I built Saran with the flexibility to allow sponsors to view the dashboard as well as organizers. However, not everyone should be able to see all (or any) of the data. To filter data, we need to create tokens which the back end uses to validate what a client can (and cannot see). You can use a tool like POSTMAN to post this data and create this token.
 
 To create a token:
 ```
-POST /token -d {"token":"sharkhacks-admin","permission":"checked_in,first_name,last_name,email,school,phone_number"}
+POST /token -d {"token":"sharkhacks-admin","permission":"mlh_id,checked_in,first_name,last_name,email,school,phone_number"}
 ```
 
+Even though it's not a field you'll see in your application, the 'mlh_id' field is necessary to identify which user is being checked-in when the RequestURL is sent.
 Now, you can navigate to `<app-name>.herokuapp.com?token=sharkhacks-admin` and it will fill the columns with `checked_in`, `first_name`, `last_name`, `email_address`, `school`, and `phone_number`. How neat!
 
 ## What Next?
