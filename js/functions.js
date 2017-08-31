@@ -196,6 +196,7 @@ MyMlhDash.prototype.getEl = function (user) {
 	console.log(this.DEADLINE);
 	var date = new Date(this.DEADLINE);
 	console.log(date);
+	console.log(user.updated_at);
 	if (user.updated_at){
 		var signUpDate = new Date(user.updated_at);
 		console.log(this.DEADLINE);
