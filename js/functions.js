@@ -193,6 +193,7 @@ MyMlhDash.prototype.showHeaders = function (data) {
 
 MyMlhDash.prototype.getEl = function (user) {
 	var el = '<tr>';
+	console.log(this.DEADLINE);
 	if (user.updated_at){
 		var signUpDate = new Date(user.updated_at);
 		console.log(this.DEADLINE);
